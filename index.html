@@ -174,5 +174,11 @@
 
     <div class="sr-only" id="announcer" aria-live="polite"></div>
     <script type="module" src="/src/main.js"></script>
+    <!-- This file is the source page and needs the dev server. Opened straight from disk, hand off to the built copy in dist/. -->
+    <script>
+      if (location.protocol === "file:" && document.querySelector('script[src$="/src/main.js"]')) {
+        location.replace("dist/index.html" + location.search + location.hash);
+      }
+    </script>
   </body>
 </html>
