@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0b0d" />
+    <meta
+      name="description"
+      content="New to the gym? Click any muscle on a 3D body to see what it does, how it moves and three beginner exercises that build it. Bones, joints, ligaments, nerves, arteries and veins each have their own page too."
+    />
+    <title>First Rep: the 3D muscle map for gym beginners</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip-link" href="#muscle-list">Skip to the list of muscles and structures</a>
+
+    <!-- shared icons -->
+    <svg width="0" height="0" class="sprite" aria-hidden="true" focusable="false">
+      <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7" /><path d="M3 4v5h5" /></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+      <symbol id="i-pointer" viewBox="0 0 24 24"><path d="m4 4 6.5 16 2.4-6.6L19.5 11z" /><path d="m14 14 6 6" /></symbol>
+      <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13" /><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01" /></symbol>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></symbol>
+      <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14" /><path d="m6 13 6 6 6-6" /></symbol>
+      <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6" /></symbol>
+      <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" /></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2.5 19.5h19z" /><path d="M12 10v4.5" /><path d="M12 17.2h.01" /></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.3-4.3" /></symbol>
+      <symbol id="i-hand" viewBox="0 0 24 24"><path d="M9 11.5V5.2a1.6 1.6 0 0 1 3.2 0V10" /><path d="M12.2 10V8.6a1.6 1.6 0 0 1 3.2 0v2" /><path d="M15.4 10.8v-.6a1.6 1.6 0 0 1 3.2 0V15a6 6 0 0 1-6 6h-1.2a6 6 0 0 1-5-2.7l-2-3a1.6 1.6 0 0 1 2.6-1.8L9 15.6" /></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z" /><path d="m3 12.5 9 5 9-5" /><path d="m3 17 9 5 9-5" /></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" /></symbol>
+      <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5" /></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></symbol>
+      <symbol id="i-pose" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2" /><path d="M3.5 8.5 12 10l8.5-1.5" /><path d="M12 10v6" /><path d="m8 21.5 4-5.5 4 5.5" /></symbol>
+      <!-- stick figures for the Pose menu, one for each exercise position. A short bar at a hand is a dumbbell. -->
+      <symbol id="i-pose-rest" viewBox="0 0 24 24"><circle cx="12" cy="4.2" r="2.1" /><path d="M12 7.6v7" /><path d="m8.6 14.6 3.4-6 3.4 6" /><path d="m9.2 21.6 2.8-7 2.8 7" /></symbol>
+      <symbol id="i-pose-squat" viewBox="0 0 24 24"><circle cx="13.2" cy="6.1" r="2" /><path d="M11.6 8.6 8 14.2l6.6.2-1.2 7h3.2" /><path d="m11.9 9.4 6.9.5" /></symbol>
+      <symbol id="i-pose-lunge" viewBox="0 0 24 24"><circle cx="11" cy="3.8" r="2" /><path d="m10.8 6.8-.3 5.8" /><path d="m10.5 12.6 4.9.4-.2 8.4H18" /><path d="M10.5 12.6 8.2 18.8l-4.2-.4.3 3" /></symbol>
+      <symbol id="i-pose-deadlift" viewBox="0 0 24 24"><circle cx="17.2" cy="8" r="2" /><path d="M14.6 9.2 8 12.2l2.4 4.4-.8 4.8h3.2" /><path d="M14.4 9.8v5.6" /><path d="M12.8 16.2h3.2" /></symbol>
+      <symbol id="i-pose-thrust" viewBox="0 0 24 24"><circle cx="3.4" cy="12.6" r="1.8" /><path d="M5.6 14.2h12l.2 6.8h2.4" /><path d="M2.8 15.8h5v5.4h-5z" /></symbol>
+      <symbol id="i-pose-calf" viewBox="0 0 24 24"><circle cx="11" cy="3.4" r="2" /><path d="M11 6.6v13l2.8 2.4" /><path d="m11 8.2 1 5.2" /><path d="M7.5 22.4h10" /></symbol>
+      <symbol id="i-pose-march" viewBox="0 0 24 24"><circle cx="11" cy="3.8" r="2" /><path d="M11 7v6.6" /><path d="M11 13.6v7.8h2.6" /><path d="m11 13.6 4.6-.4-.4 5.4 1.8.6" /><path d="m11 8.4 2.4 2.6 2-2.4" /><path d="M11 8.4 8.8 11.4l-1.6-1.4" /></symbol>
+      <symbol id="i-pose-pushup" viewBox="0 0 24 24"><circle cx="20" cy="13.3" r="1.9" /><path d="M3.2 20.8 17.2 14.6v6.2h1.6" /></symbol>
+      <symbol id="i-pose-plank" viewBox="0 0 24 24"><circle cx="19.9" cy="16.2" r="1.9" /><path d="M3.2 20.8 17 17.4V21h3.8" /></symbol>
+      <symbol id="i-pose-curl" viewBox="0 0 24 24"><circle cx="11" cy="4.2" r="2.1" /><path d="M11 7.6v7" /><path d="m11 9 .4 4.4 4.4-3.6" /><path d="m14.8 8.6 1.8 2.2" /><path d="m9.6 21.6 1.4-7 1.4 7" /></symbol>
+      <symbol id="i-pose-press" viewBox="0 0 24 24"><circle cx="12" cy="4.6" r="2.1" /><path d="M12 8v6.6" /><path d="M7.2 4.8v5L12 8.8l4.8 1v-5" /><path d="M5.4 4.6H9M15 4.6h3.6" /><path d="m9.2 21.6 2.8-7 2.8 7" /></symbol>
+      <symbol id="i-pose-raise" viewBox="0 0 24 24"><circle cx="12" cy="4.2" r="2.1" /><path d="M12 7.6v7" /><path d="M4.4 9.8 12 8.8l7.6 1" /><path d="M4.4 8.4v2.8M19.6 8.4v2.8" /><path d="m9.2 21.6 2.8-7 2.8 7" /></symbol>
+      <symbol id="i-pose-triceps" viewBox="0 0 24 24"><circle cx="12" cy="5.2" r="2.1" /><path d="M12 8.6v6" /><path d="M9.6 5 8 3.2l4 5.8 4-5.8-1.6 1.8" /><path d="m9.2 21.6 2.8-7 2.8 7" /></symbol>
+      <symbol id="i-pose-row" viewBox="0 0 24 24"><circle cx="17.2" cy="8" r="2" /><path d="M14.6 9.2 8 12.2l2.4 4.4-.8 4.8h3.2" /><path d="m14.6 9.6-3.6-1.4.2 5" /><path d="M9.8 13.8h2.8" /></symbol>
+      <symbol id="i-pose-pullup" viewBox="0 0 24 24"><circle cx="12" cy="5.4" r="2" /><path d="M12 8.4v6.4" /><path d="M7.4 7.4 7.2 12 12 9.8l4.8 2.2-.2-4.6" /><path d="M3.6 7.4H9M15 7.4h5.4" /><path d="m10.4 21.2 1.6-6.4 1.6 6.4" /></symbol>
+      <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 7v10M3.5 9.5v5M17.5 7v10M20.5 9.5v5M6.5 12h11" /></symbol>
+    </svg>
+
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="First Rep home">
+        <span class="logo__mark" aria-hidden="true"><svg class="icon"><use href="#i-dumbbell" /></svg></span>
+        <span class="logo__text">First Rep</span>
+      </a>
+      <p class="site-header__meta">
+        <span id="stat-muscles">20</span> muscle groups <span aria-hidden="true">/</span>
+        <span id="stat-exercises">60</span> exercises
+      </p>
+    </header>
+
+    <main>
+      <section class="explorer" id="map" aria-labelledby="page-title">
+        <div class="intro">
+          <div class="intro__title">
+            <p class="eyebrow">For your first weeks at the gym</p>
+            <h1 id="page-title">Tap a muscle. <br /><em>Learn the lift.</em></h1>
+          </div>
+          <p class="intro__lead">
+            Pick any muscle on the body to see what it does, how it moves, and three exercises that build it.
+          </p>
+        </div>
+
+        <div class="block stage" id="stage-block">
+          <canvas
+            id="stage"
+            role="img"
+            tabindex="0"
+            aria-label="3D model of the body with its muscles, bones, joints, ligaments, nerves and blood vessels. Arrow keys turn the model, plus and minus zoom. Use the list to choose a muscle or a structure with the keyboard, and the Surface, Deep and Skeleton buttons to change layer."
+          ></canvas>
+          <p class="stage__hint" id="stage-hint">
+            <svg class="icon" aria-hidden="true"><use href="#i-pointer" /></svg>
+            <span>Drag to turn. Click a muscle.</span>
+          </p>
+          <div class="stage__loading" id="stage-loading" role="status">Building the model…</div>
+          <div class="stage__error" id="stage-error" hidden>
+            <p><strong>The 3D model could not start.</strong></p>
+            <p>Your browser or device has WebGL turned off. You can still explore every muscle from the list.</p>
+          </div>
+          <div class="tooltip" id="tooltip" aria-hidden="true"></div>
+
+          <div class="stage__layers" role="group" aria-label="Body layer">
+            <button type="button" class="segmented__btn is-active" data-layer="surface" aria-pressed="true">Surface</button>
+            <button type="button" class="segmented__btn" data-layer="deep" aria-pressed="false">Deep</button>
+            <button type="button" class="segmented__btn" data-layer="skeleton" aria-pressed="false">Skeleton</button>
+          </div>
+          <ul class="stage__legend" id="legend" aria-label="Color key" hidden>
+            <li class="legend--bone"><i aria-hidden="true"></i>Bone</li>
+            <li class="legend--ligament"><i aria-hidden="true"></i>Ligament</li>
+            <li class="legend--nerve"><i aria-hidden="true"></i>Nerve</li>
+            <li class="legend--joint"><i aria-hidden="true"></i>Joint</li>
+            <li class="legend--artery"><i aria-hidden="true"></i>Artery</li>
+            <li class="legend--vein"><i aria-hidden="true"></i>Vein</li>
+          </ul>
+
+          <div class="stage__controls" role="group" aria-label="Model view">
+            <div class="segmented">
+              <button type="button" class="segmented__btn is-active" data-view="front" aria-pressed="true">Front</button>
+              <button type="button" class="segmented__btn" data-view="back" aria-pressed="false">Back</button>
+            </div>
+            <div class="stage__tools">
+              <button type="button" class="tool tool--pose" data-tool="pose" id="pose" aria-haspopup="menu" aria-expanded="false" aria-controls="pose-menu" aria-label="Pose: Relaxed. Choose a pose.">
+                <svg class="icon" aria-hidden="true"><use href="#i-pose" /></svg>
+                <span class="tool__label" id="pose-label">Pose</span>
+              </button>
+              <!-- filled by main.js: one tile for each pose -->
+              <div class="pose-menu" id="pose-menu" hidden></div>
+              <button type="button" class="tool" data-tool="zoom-in" aria-label="Zoom in">
+                <svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>
+              </button>
+              <button type="button" class="tool" data-tool="zoom-out" aria-label="Zoom out">
+                <svg class="icon" aria-hidden="true"><use href="#i-minus" /></svg>
+              </button>
+              <button type="button" class="tool" data-tool="reset" aria-label="Reset view">
+                <svg class="icon" aria-hidden="true"><use href="#i-rotate" /></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="stage__work" id="stage-work" hidden>
+            <p><b id="work-name"></b><span id="work-detail"></span></p>
+            <button type="button" class="icon-btn" data-action="clear-work" aria-label="Stop showing this on the model">
+              <svg class="icon" aria-hidden="true"><use href="#i-close" /></svg>
+            </button>
+          </div>
+
+          <button type="button" class="stage__jump" id="jump" hidden>
+            <span id="jump-label">Chest</span>
+            <span class="stage__jump-cta"><span id="jump-cta">See exercises</span> <svg class="icon" aria-hidden="true"><use href="#i-arrow-down" /></svg></span>
+          </button>
+        </div>
+
+        <nav class="block index" id="muscle-list" aria-label="Muscles and structures" tabindex="-1">
+          <h2 class="sr-only" id="index-title">All muscles</h2>
+          <div class="index__switch" role="group" aria-label="What the list shows">
+            <button type="button" class="index__switch-btn is-active" data-index="muscles" aria-pressed="true">Muscles</button>
+            <button type="button" class="index__switch-btn" data-index="structures" aria-pressed="false">Structures</button>
+          </div>
+          <div class="search" role="search">
+            <label class="sr-only" for="search">Search muscles, structures and exercises</label>
+            <svg class="icon" aria-hidden="true"><use href="#i-search" /></svg>
+            <input id="search" type="search" placeholder="Muscles, bones, exercises" autocomplete="off" spellcheck="false" enterkeyhint="search" />
+          </div>
+          <div class="search__results" id="search-results" hidden></div>
+          <div class="index__groups" id="index-groups"></div>
+        </nav>
+
+        <article class="block panel" id="panel" aria-labelledby="panel-title"></article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        <strong>First Rep</strong> is for education and is not medical advice. If you have an injury, a health condition
+        or pain during an exercise, talk to a doctor or a qualified trainer before you continue.
+      </p>
+      <p class="site-footer__note">The body is a stylized model. Muscle shapes and positions are simplified.</p>
+    </footer>
+
+    <div class="sr-only" id="announcer" aria-live="polite"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
