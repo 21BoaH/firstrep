@@ -2,10 +2,22 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { buildBody } from "./anatomy.js";
+import { buildRealBody, loadAnatomy } from "./realbody.js";
 import { createContactShadowTexture } from "./textures.js";
 import { buildAttachmentMarkers } from "./markers.js";
 import { buildEquipment, GRIP_POINT } from "./props.js";
+import { createOutlines } from "./outlines.js";
 import { ATTACHMENTS } from "../data/attachments.js";
+
+/**
+ * The real muscle and bone shapes (src/data/zanatomy). Loaded with this module, so the page shows
+ * the stage once they are here. A browser that cannot unpack them gets the drawn figure of
+ * anatomy.js instead, which has the same structure.
+ */
+const ANATOMY = await loadAnatomy().catch((error) => {
+  console.warn("Using the drawn figure:", error);
+  return null;
+});
 
 const GOLD = new THREE.Color("#ecb75c");
 const HOVER = new THREE.Color("#ffd9a3");
@@ -279,7 +291,7 @@ export class MuscleViewer {
     camera.add(rimCool);
     this.rims = [rimWarm, rimCool];
 
-    const body = buildBody();
+    const body = ANATOMY ? buildRealBody(ANATOMY) : buildBody();
     this.body = body;
     scene.add(body.root);
     /** highlight state per part, keyed like body.parts */
@@ -334,6 +346,12 @@ export class MuscleViewer {
     contact.position.y = 0.0015;
     scene.add(disc, edge, contact);
     this.props.push(disc, edge, contact);
+
+    // thin dark lines where one muscle meets the next, on each side of the body (see outlines.js)
+    this.outlines = createOutlines(renderer);
+    for (const mesh of body.meshes) {
+      if (mesh.userData.outline) this.outlines.add(mesh, `${mesh.userData.outline}|${mesh.userData.side}`);
+    }
 
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
@@ -575,18 +593,13 @@ export class MuscleViewer {
   /** Is this muscle (or this head of it) drawn in the given layer? */
   isShown(id, part = null, layer = this.layer) {
     const entries = (this.body.groups.get(id) ?? []).filter((e) => !part || e.part === part);
-    return entries.some((e) => {
-      if (layer === "skeleton") return e.layer === "surface";
-      if (layer === "deep") return e.layer === "deep" || !e.cover;
-      return e.layer === "surface";
-    });
+    return entries.some((e) => e.meshes.some((mesh) => this._visibleIn(mesh, layer)));
   }
 
   /** The layer to switch to so that this muscle (or head) can be seen. */
   layerFor(id, part = null) {
     if (this.isShown(id, part)) return this.layer;
-    const entries = (this.body.groups.get(id) ?? []).filter((e) => !part || e.part === part);
-    return entries.some((e) => e.layer === "deep") ? "deep" : "surface";
+    return this.isShown(id, part, "surface") ? "surface" : "deep";
   }
 
   /**
@@ -689,6 +702,7 @@ export class MuscleViewer {
     this._unlight();
     this.markers.dispose();
     this.equipment.dispose();
+    this.outlines.dispose();
     for (const material of this.litMaterials.values()) material.dispose();
     this.body.dispose();
     for (const mesh of this.props) {
@@ -705,6 +719,7 @@ export class MuscleViewer {
   _visibleIn(mesh, layer) {
     const kind = mesh.userData.layer; // undefined for the core and the graphite shell
     if (kind === "skeleton") return layer === "skeleton";
+    if (kind === "backdrop") return layer !== "skeleton"; // the graphite bones between the muscles
     if (kind === "nerve") return layer !== "surface";
     if (kind === "deep") return layer === "deep";
     if (kind === "surface") return layer === "skeleton" ? !mesh.userData.landmark : !(layer === "deep" && mesh.userData.cover);
@@ -844,10 +859,10 @@ export class MuscleViewer {
       this._settle();
       this.pose = now;
       if (POSE_FRAME[name].hold === "bar") {
-        const hands = this.rig.hand[0].localToWorld(new THREE.Vector3(...GRIP_POINT));
+        const hands = this.rig.hand[0].localToWorld(new THREE.Vector3(...(this.body.gripPoint ?? GRIP_POINT)));
         this.propPlaces[name] = { y: hands.y, z: hands.z };
       } else {
-        const back = this.rig.centre[0].localToWorld(new THREE.Vector3(...BENCH_REST));
+        const back = this.rig.centre[0].localToWorld(new THREE.Vector3(...(this.body.benchRest ?? BENCH_REST)));
         this.propPlaces[name] = { top: back.y, z: back.z };
       }
     }
@@ -1090,6 +1105,12 @@ export class MuscleViewer {
       const swell = 1 + st.glow * 0.045 * pulse;
       const bulge = 1 + st.glow * 0.17 * (this.contraction ?? 0);
       for (const mesh of meshes) {
+        if (mesh.userData.kind === "real") {
+          // the real shapes thicken along their normals, most in the belly (see realbody.js)
+          const amount = working && mesh.userData.side === 0 && mesh.userData.limb ? (bulge - 1) * 0.045 : working ? 0 : (swell - 1) * 0.035;
+          mesh.userData.swell = Math.round(amount * 1e5) / 1e5;
+          continue;
+        }
         const b = mesh.userData.baseScale;
         if (working && mesh.userData.side === 0 && LIMBS.includes(mesh.parent.name)) mesh.scale.set(b.x * bulge, b.y, b.z * bulge);
         else if (working) mesh.scale.copy(b);
@@ -1110,6 +1131,10 @@ export class MuscleViewer {
     }
     for (const material of this.litMaterials.values()) material.emissiveIntensity = 0.62 + 0.3 * pulse;
 
+    // the real figure bends its muscles, nerves and vessels to the pose
+    this.body.update?.();
     this.renderer.render(this.scene, this.camera);
+    // in the Skeleton layer the muscles are glass, and lines would cross the bones
+    if (this.layer !== "skeleton") this.outlines.render(this.scene, this.camera);
   }
 }

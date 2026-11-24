@@ -1,4 +1,5 @@
 import { rmSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 
 /*
@@ -6,11 +7,11 @@ import { defineConfig } from "vite";
  * root of the main branch, and Pages only serves files as they are. So the root of the repository
  * holds the BUILT site, and the source lives in src/:
  *
- *   src/index.html, src/*.js, src/*.css    the source, run by the dev server (npm run dev)
- *   index.html and assets/ at the root      the built site, written by npm run build
+ *   src/index.html, src/workouts.html, src/*.js, src/*.css    the source, run by npm run dev
+ *   index.html, workouts.html and assets/ at the root         the built site, written by npm run build
  *
- * To update the live site: npm run build, then commit the root index.html and assets/ with the
- * source change, and push to main.
+ * To update the live site: npm run build, then commit the root pages and assets/ with the source
+ * change, and push to main.
  */
 
 /** Each build gives its files new hashed names, so clear out the previous build's assets first. */
@@ -35,6 +36,13 @@ export default defineConfig({
     outDir: "..",
     // the output folder is the repository itself: never empty it
     emptyOutDir: false,
+    rolldownOptions: {
+      // two pages: the 3D muscle map, and the workout builder and log
+      input: {
+        index: fileURLToPath(new URL("./src/index.html", import.meta.url)),
+        workouts: fileURLToPath(new URL("./src/workouts.html", import.meta.url)),
+      },
+    },
   },
   plugins: [clearOldAssets()],
 });

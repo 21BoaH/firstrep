@@ -43,6 +43,7 @@ export const PARTS = {
     { id: "infraspinatus", name: "Infraspinatus", note: "The largest cuff muscle you can see. It turns the arm outward." },
     { id: "teres-minor", name: "Teres minor", note: "A slim helper for outward rotation, just below the infraspinatus." },
     { id: "supraspinatus", name: "Supraspinatus", deep: true, note: "Sits above the ridge of the shoulder blade, under the traps. It starts the arm lifting out to the side, and its tendon is the one most often irritated." },
+    { id: "subscapularis", name: "Subscapularis", deep: true, note: "The largest cuff muscle. It lies on the front of the shoulder blade, against the ribs, and turns the arm inward." },
   ],
   "deep-core": [
     { id: "transversus", name: "Transversus abdominis", deep: true, note: "The level belt of muscle around the waist, under the obliques." },
@@ -55,7 +56,7 @@ export const PARTS = {
   ],
   "hip-flexors": [
     { id: "sartorius", name: "Sartorius", note: "The long strap across the thigh. It bends the hip and the knee and turns the thigh outward." },
-    { id: "lower", name: "Iliopsoas, lower end", note: "Where the deep hip flexor surfaces at the front of the hip on its way to the thigh bone." },
+    { id: "lower", name: "Pectineus", note: "A short, flat muscle at the top of the inner thigh, beside the iliopsoas. It helps lift the thigh and draw it in." },
     { id: "psoas", name: "Psoas major", deep: true, note: "Starts on the sides of the lower spine. It is the strongest hip flexor." },
     { id: "iliacus", name: "Iliacus", deep: true, note: "Fans across the inside of the hip bone and joins the psoas in one tendon." },
   ],

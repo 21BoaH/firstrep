@@ -10,8 +10,9 @@
     />
     <title>First Rep: the 3D muscle map for gym beginners</title>
     <link rel="icon" href="./assets/favicon-L5N9J9az.svg" type="image/svg+xml" />
-    <script type="module" crossorigin src="./assets/index-D7pWJguF.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DC-J7MSC.css">
+    <script type="module" crossorigin src="./assets/index-BUStn8KE.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-BJIQ2mX1.js">
+    <link rel="stylesheet" crossorigin href="./assets/preload-helper-D2uau62o.css">
   </head>
   <body>
     <a class="skip-link" href="#muscle-list">Skip to the list of muscles and structures</a>
@@ -60,6 +61,10 @@
         <span class="logo__mark" aria-hidden="true"><svg class="icon"><use href="#i-dumbbell" /></svg></span>
         <span class="logo__text">First Rep</span>
       </a>
+      <nav class="site-nav" aria-label="Pages">
+        <a class="site-nav__link" href="./" aria-current="page">3D map</a>
+        <a class="site-nav__link" href="./workouts.html">Workouts</a>
+      </nav>
       <p class="site-header__meta">
         <span id="stat-muscles">20</span> muscle groups <span aria-hidden="true">/</span>
         <span id="stat-exercises">60</span> exercises
@@ -171,7 +176,13 @@
         <strong>First Rep</strong> is for education and is not medical advice. If you have an injury, a health condition
         or pain during an exercise, talk to a doctor or a qualified trainer before you continue.
       </p>
-      <p class="site-footer__note">The body is a stylized model. Muscle shapes and positions are simplified.</p>
+      <p class="site-footer__note">
+        The body is built from real anatomy: <a href="https://www.z-anatomy.com/">Z-Anatomy</a>, the libre 3D atlas of
+        anatomy, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> and based on
+        <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/">BodyParts3D</a> © The Database Center for Life Science,
+        licensed under <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en">CC BY-SA 2.1 Japan</a>. First Rep
+        simplified, mirrored and rigged it for posing; the adapted model is shared under CC BY-SA 4.0.
+      </p>
     </footer>
 
     <div class="sr-only" id="announcer" aria-live="polite"></div>

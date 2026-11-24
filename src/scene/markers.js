@@ -68,11 +68,23 @@ export function buildAttachmentMarkers(body, attachments) {
     const min = new THREE.Vector3(Infinity, Infinity, Infinity);
     const max = new THREE.Vector3(-Infinity, -Infinity, -Infinity);
     const v = new THREE.Vector3();
+    // A bone may sit deeper than its frame group (the finger bones ride in the finger joints):
+    // carry its points up to the frame. The trunk's two groups, centre and half, share one frame.
+    const toFrame = (mesh) => {
+      const m = new THREE.Matrix4();
+      for (let o = mesh; o; o = o.parent) {
+        if (o !== mesh && (o.name === frame || (trunk && (o.name === "centre" || o.name === "half")))) return m;
+        o.updateMatrix();
+        m.premultiply(o.matrix);
+      }
+      return null;
+    };
     for (const mesh of meshes) {
-      mesh.updateMatrix();
+      const matrix = toFrame(mesh);
+      if (!matrix) continue;
       const position = mesh.geometry.attributes.position;
       for (let i = 0; i < position.count; i++) {
-        v.fromBufferAttribute(position, i).applyMatrix4(mesh.matrix);
+        v.fromBufferAttribute(position, i).applyMatrix4(matrix);
         if (trunk && v.x < 0) continue; // a bone on the midline: keep the modeled half of it
         points.push(v.x, v.y, v.z);
         min.min(v);

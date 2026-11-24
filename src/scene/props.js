@@ -2,8 +2,9 @@ import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 
 /**
- * Where a handle sits in the hand, in the hand's own coordinates: across the roots of the
- * fingers, on the palm side. The fingers close around this point when the hand grips.
+ * Where a handle sits in the hand of the drawn figure, in the hand's own coordinates: across the
+ * roots of the fingers, on the palm side. The fingers close around this point when the hand grips.
+ * The real figure works its own out from the bones of the hand (body.gripPoint).
  */
 export const GRIP_POINT = [-0.024, -0.088, 0.002];
 
@@ -41,7 +42,7 @@ export function buildEquipment(body, scene) {
   const collar = new THREE.CylinderGeometry(0.0165, 0.0165, 0.008, 18);
   const dumbbells = body.rig.hand.map((hand) => {
     const group = new THREE.Group();
-    group.position.set(...GRIP_POINT);
+    group.position.set(...(body.gripPoint ?? GRIP_POINT));
     group.rotation.x = Math.PI / 2;
     group.visible = false;
     hand.add(group);
