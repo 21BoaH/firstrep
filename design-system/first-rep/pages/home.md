@@ -1,6 +1,6 @@
 # Home page overrides
 
-These rules override `MASTER.md` for the whole site: the palette and type below apply to both pages. `workouts.md` adds the layout rules of the Workouts page.
+These rules override `MASTER.md` for the whole site, which is a single page.
 The source of truth for the values is `src/styles.css`.
 
 ## Why this differs from the master file

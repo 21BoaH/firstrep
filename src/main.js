@@ -13,7 +13,6 @@ import { PARTS, partOf, partsOf } from "./data/parts.js";
 import { CARE, SORENESS_NOTE } from "./data/care.js";
 import { MUSCLE_LINK_LABEL, STRUCTURES, STRUCTURE_GROUPS } from "./data/structures.js";
 import { DEMOS, HELPERS, MOTIONS, VESSEL } from "./data/work.js";
-import { MODEL_TO_REGION } from "./training/muscles.js";
 
 /** The layers of the model, in order. */
 const LAYERS = {
@@ -289,11 +288,6 @@ function detailMarkup(m) {
       <section class="tabpanel" role="tabpanel" id="tabpanel-exercises" aria-labelledby="tab-exercises" tabindex="0" ${hidden("exercises")}>
         <p class="note"><strong>3 × 8–12</strong> means 3 sets of 8 to 12 repetitions. Rest one to two minutes between sets.</p>
         <ol class="ex-list">${exercises}</ol>
-        ${
-          MODEL_TO_REGION[m.id]
-            ? `<a class="link-btn" href="./workouts.html#/exercises/${MODEL_TO_REGION[m.id]}">${icon("arrow-right")}<span>More ${esc(m.name.toLowerCase())} exercises, and log your sets</span></a>`
-            : ""
-        }
       </section>
       <section class="tabpanel" role="tabpanel" id="tabpanel-mechanics" aria-labelledby="tab-mechanics" tabindex="0" ${hidden("mechanics")}>
         <div class="job">

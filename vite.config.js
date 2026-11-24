@@ -7,10 +7,10 @@ import { defineConfig } from "vite";
  * root of the main branch, and Pages only serves files as they are. So the root of the repository
  * holds the BUILT site, and the source lives in src/:
  *
- *   src/index.html, src/workouts.html, src/*.js, src/*.css    the source, run by npm run dev
- *   index.html, workouts.html and assets/ at the root         the built site, written by npm run build
+ *   src/index.html, src/*.js, src/*.css    the source, run by npm run dev
+ *   index.html and assets/ at the root     the built site, written by npm run build
  *
- * To update the live site: npm run build, then commit the root pages and assets/ with the source
+ * To update the live site: npm run build, then commit the root page and assets/ with the source
  * change, and push to main.
  */
 
@@ -37,10 +37,9 @@ export default defineConfig({
     // the output folder is the repository itself: never empty it
     emptyOutDir: false,
     rolldownOptions: {
-      // two pages: the 3D muscle map, and the workout builder and log
+      // one page: the 3D muscle map
       input: {
         index: fileURLToPath(new URL("./src/index.html", import.meta.url)),
-        workouts: fileURLToPath(new URL("./src/workouts.html", import.meta.url)),
       },
     },
   },
